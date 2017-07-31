@@ -1,0 +1,57 @@
+﻿@model NewBlog.Models.Post
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<div>
+    
+    
+
+
+        <div>
+            <h1 style="text-align:center">
+                @Html.DisplayFor(model => model.Title)
+            </h1>
+        </div>
+        <div>
+            <h3 style="color:gray">
+                <img src="~/Images/Tag icon.png" height="30" width="30" />
+
+                @foreach (var item in Model.Tags)
+                {
+
+                    <text> @Html.DisplayFor(m => item.Name)|
+                    </text>
+
+                }
+            </h3>
+
+        </div>
+
+        <div style="text-align:justify">
+            @Html.DisplayFor(model => model.Text)
+        </div>
+        <div>
+            <h4 style="color:crimson">
+            By:   @Html.DisplayFor(model => model.AuthorName.Author_Name)
+            <br />
+           Expert: @Html.DisplayFor(model => model.AuthorName.Expertise)
+
+            </h4>
+        </div>
+
+    </div>
+
+<div class="row">
+   
+       
+   
+    <div class="bottom-right" style="text-align-last:right">
+        <div style="color:blue">@Html.DisplayFor(model => model.Date)</div> 
+        <a class="btn btn-default" href="/Posts/Edit/@Model.ID" style="background-color:aqua">Edit &raquo;</a> |
+        <a class="btn btn-default" href="/Posts/Delete/@Model.ID" style="background-color:aqua">Delete &raquo;</a> |
+        <a class="btn btn-default" href="/Posts/Index" style="background-color:aqua">Back &raquo;</a>
+    </div>
+</div>
+
