@@ -98,7 +98,7 @@ namespace NewBlog.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Post post = db.Posts.Where(x => x.ID == id).Include(X => X.Tags).FirstOrDefault();
+            Post post = db.Posts.Where(x => x.ID == id).Include(X => X.Tags).Include(y=>y.AuthorName).FirstOrDefault();
             if (post == null)
             {
                 return HttpNotFound();
