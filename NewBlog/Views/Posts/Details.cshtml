@@ -1,4 +1,4 @@
-﻿@model NewBlog.Models.Post
+﻿@model NewBlog.Models.ViewModel
 
 @{
     ViewBag.Title = "Details";
@@ -11,14 +11,14 @@
 
         <div>
             <h1 style="text-align:center">
-                @Html.DisplayFor(model => model.Title)
+                @Html.DisplayFor(model => model.post.Title)
             </h1>
         </div>
         <div>
             <h3 style="color:gray">
                 <img src="~/Images/Tag icon.png" height="30" width="30" />
 
-                @foreach (var item in Model.Tags)
+                @foreach (var item in Model.post.Tags)
                 {
 
                     <text> @Html.DisplayFor(m => item.Name)|
@@ -30,13 +30,13 @@
         </div>
 
         <div style="text-align:justify">
-            @Html.DisplayFor(model => model.Text)
+            @Html.DisplayFor(model => model.post.Text)
         </div>
         <div>
             <h4 style="color:crimson">
-            By:   @Html.DisplayFor(model => model.AuthorName.Author_Name)
+            By:   @Html.DisplayFor(model => model.post.AuthorName.Author_Name)
             <br />
-           Expert: @Html.DisplayFor(model => model.AuthorName.Expertise)
+           Expert: @Html.DisplayFor(model => model.post.AuthorName.Expertise)
 
             </h4>
         </div>
@@ -48,10 +48,84 @@
        
    
     <div class="bottom-right" style="text-align-last:right">
-        <div style="color:blue">@Html.DisplayFor(model => model.Date)</div> 
-        <a class="btn btn-default" href="/Posts/Edit/@Model.ID" style="background-color:aqua">Edit &raquo;</a> |
-        <a class="btn btn-default" href="/Posts/Delete/@Model.ID" style="background-color:aqua">Delete &raquo;</a> |
+        <div style="color:blue">@Html.DisplayFor(model => model.post.Date)</div> 
+        <a class="btn btn-default" href="/Posts/Edit/@Model.post.ID" style="background-color:aqua">Edit &raquo;</a> |
+        <a class="btn btn-default" href="/Posts/Delete/@Model.post.ID" style="background-color:aqua">Delete &raquo;</a> |
         <a class="btn btn-default" href="/Posts/Index" style="background-color:aqua">Back &raquo;</a>
+    </div>
+</div>
+
+
+@if (Model.comment.Count() != 0)
+{
+    <div>
+        <h3>Comments</h3>
+        <hr />
+        <div class="container">
+            <div class="panel panel-success">
+                <div class="panel-heading">
+                    <dl class="dl-horizontal" style="padding-top:5px">
+                        @foreach (var i in Model.comment)
+                        {
+                            <dt style="padding-top:5px">
+                                Name:
+                            </dt>
+
+                                <dd style="padding-top:5px">
+                                    @i.Name
+                                </dd>
+
+                                <dt style="padding-top:5px">
+                                    Comment:
+                                </dt>
+
+                                <dd style="padding-top:5px">
+                                    @i.Comments
+                                </dd>
+                        }
+
+
+                    </dl>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+
+
+<div class="container">
+    <div class="panel panel-info">
+        <div class="panel-heading">
+            <label>Post Comment</label><br />
+            <form action="~/Posts/Comment" method="post" class="form-horizontal">
+                <div class="form-group">
+                    <label class="control-label col-sm-2">Name:</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="name" placeholder="Enter name" name="name">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-2">Comment:</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="comment" placeholder="Enter comment" name="comment">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <input type="hidden" name="Id" value="@Model.post.ID" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" class="btn btn-success">Post Comment</button>
+                    </div>
+                </div>
+
+            </form>
+        </div>
     </div>
 </div>
 

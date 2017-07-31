@@ -38,7 +38,12 @@ namespace NewBlog.Controllers
             {
                 return HttpNotFound();
             }
-            return View(post);
+
+            List<Comment> com = db.Comments.Where(x => x.ID == id).ToList();
+
+            ViewModel vm = new ViewModel { post=post, comment = com };
+            return View("Details", vm);
+
         }
 
         [HttpPost]
@@ -155,6 +160,19 @@ namespace NewBlog.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+
+        public ActionResult Comment(string name, string comment, int Id)
+        {
+            using (var d = new NewBlogDBContext())
+            {
+                d.Database.ExecuteSqlCommand("Insert Into Comments Values('" + Id + "','" + name + "','" + comment + "')");
+                Post p = db.Posts.Where(x => x.ID == Id).Include(X => X.Tags).Include(x => x.AuthorName).FirstOrDefault();
+                List<Comment> com = db.Comments.Where(x => x.ID == Id).ToList();
+                ViewModel vm = new ViewModel { post = p, comment = com };
+                return View("Details", vm);
+            }
         }
     }
 }

@@ -22,5 +22,6 @@ namespace NewBlog.Models
         public System.Data.Entity.DbSet<NewBlog.Models.Post> Posts { get; set; }
          public System.Data.Entity.DbSet<NewBlog.Models.Tags> Tags { get; set; }
         public System.Data.Entity.DbSet<NewBlog.Models.Author> Authors { get; set; }
+        public System.Data.Entity.DbSet<NewBlog.Models.Comment> Comments { get; set; }
     }
 }
